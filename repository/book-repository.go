@@ -32,7 +32,7 @@ func (db *bookConnection) InsertBook(b entity.Book) entity.Book {
 }
 
 func (db *bookConnection) UpdateBook(b entity.Book) entity.Book {
-	db.connection.Save(&b)
+	db.connection.Set("gorm:query_option", "FOR UPDATE").Save(&b)
 	db.connection.Preload("User").Find(&b)
 	return b
 }
